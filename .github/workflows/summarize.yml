@@ -1,0 +1,21 @@
+name: Summarize PR Comments
+
+on:
+  pull_request_review:
+  pull_request_review_comment:
+    types: [edited, deleted]
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # PRの本文を更新するために必要です
+    steps:
+      - name: Summarize PR Comments
+        uses: boushi-bird/pr-review-digest@v1
+        with:
+          # 必須: OpenAIのAPIキーをSecretsに設定してください
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          # (オプション) 使用するOpenAIのモデルを指定
+          openai-model: 'o3-mini'
+          # その他オプションは `入力 (Inputs)` を参照してください
